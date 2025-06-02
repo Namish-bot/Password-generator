@@ -1098,7 +1098,6 @@ select:focus {
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // DOM elements
             const generateBtn = document.getElementById('generate');
             const copyBtn = document.getElementById('copy');
             const qrGenerateBtn = document.getElementById('qr-generate');
@@ -1132,8 +1131,6 @@ select:focus {
             const auditContainer = document.getElementById('audit-log');
             const auditList = document.getElementById('audit-list');
             const clearLogsBtn = document.getElementById('clear-logs');
-
-            // Chart initialization
             let strengthChart = null;
             const chartCanvas = document.getElementById('strength-chart');
             const chartConfig = {
@@ -1177,18 +1174,12 @@ select:focus {
                     }
                 }
             };
-
-            // Password history and audit log
             let passwordHistory = JSON.parse(localStorage.getItem('quantumLockHistory')) || [];
             let auditLogs = JSON.parse(localStorage.getItem('quantumLockLogs')) || [];
-
-            // Theme initialization
             if (localStorage.getItem('theme') === 'light') {
                 document.body.classList.add('light-mode');
                 themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
             }
-
-            // Particle background
             const canvas = document.getElementById('particle-bg');
             const ctx = canvas.getContext('2d');
             canvas.width = window.innerWidth;
@@ -1388,7 +1379,6 @@ select:focus {
             }
 
             function generatePassword() {
-    // Show loading animation
     passwordDisplay.innerHTML = '<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span>';
     passwordDisplay.classList.remove('empty');
 
@@ -1583,8 +1573,8 @@ select:focus {
       width: 220,
       margin: 2,
       color: {
-        dark: '#000000',   // black squares
-        light: '#ffffff'   // white background (ensures scanability)
+        dark: '#000000',   
+        light: '#ffffff'   
       },
       errorCorrectionLevel: 'H'
     }, (error) => {
@@ -1644,8 +1634,6 @@ select:focus {
                 if (password.length < 12) {
                     feedback.push('Consider increasing length to 12+ characters for better security.');
                 }
-
-                // Variety score
                 const hasLower = /[a-z]/.test(password);
                 const hasUpper = /[A-Z]/.test(password);
                 const hasDigit = /\d/.test(password);
@@ -1657,13 +1645,10 @@ select:focus {
                 if (variety < 3) {
                     feedback.push('Add more character types (uppercase, numbers, special) for higher entropy.');
                 }
-
-                // Entropy score
                 const uniqueChars = new Set(password).size;
                 entropyScore = (uniqueChars / password.length) * 30;
                 strength += entropyScore;
 
-                // Crack time
                 const charsetSize = (hasLower ? 26 : 0) + (hasUpper ? 26 : 0) + (hasDigit ? 10 : 0) + (hasSpecial ? 32 : 0);
                 const entropyBits = Math.log2(Math.pow(charsetSize, password.length));
 
@@ -1683,8 +1668,6 @@ select:focus {
                     strengthBar.className = 'strength-bar strength-strong';
                     strengthValue.className = 'strength-value strong';
                 }
-
-                // Compliance checks
                 const compliance = [
                     { name: 'NIST', valid: password.length >= 8 && variety >= 3 },
                     { name: 'OWASP', valid: password.length >= 12 && hasSpecial },
